@@ -5,6 +5,7 @@ function Player(){
     const [players, setPlayer] = useState([])
 
     useEffect(() => {
+        const playerData = () => {
             axiosWithAuth()
             .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/status/')
             .then(res => {
@@ -14,6 +15,8 @@ function Player(){
             .catch(err => {
                 console.log(err)
             })
+        }
+        playerData()
     },[])
 
     return(
