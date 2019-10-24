@@ -3,8 +3,7 @@ import axiosWithAuth from '../auth/axiosWithAuth';
 
 const Map = ({ playerData }) => {
     const [rooms, setRooms] = useState([])
-    const [grid, setGrid] = useState([])
-    const [matrix, setMatrix] = useState([])
+
 
     useEffect(() => {
         const getRooms = () => {
