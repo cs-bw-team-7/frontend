@@ -317,10 +317,23 @@ const Map = ({ playerData }) => {
               border: "none"
           }}></span>)
         }
+        let descriptions = [
+            'A Dark Cave',
+            'A misty room',
+            'Mt. Holloway'
+        ]
+        let background = `rgb(${(245 - (room.elevation * 35))},${(245 - (room.elevation * 35))},${(245 - (room.elevation * 35))})`;
+        if (room.here) {
+            background = 'green'
+        } else if (room.terrain === "CAVE") {
+            background = "#37358e"
+        } else if (descriptions.indexOf(room.title) < 0) {
+            background = "#dbef72"
+        }
         return (<span onClick={handleOnClick} data-coords={`(${room.coordinates.x},${room.coordinates.y})`} style={{
           // border: "1px solid red",
           // backgroundColor: room.here ? "rgba(255, 255, 255, 1)" : (room.safe ? "rgba(46, 193, 46, 0.6)" : "rgba(0, 0, 0, 0.6)"),
-          backgroundColor: room.here ? "green" : "white",
+          backgroundColor: background, //room.here ? "green" : `rgb(${(255 - (room.elevation * 35))},${(255 - (room.elevation * 35))},${(255 - (room.elevation * 35))})`,
           // color: room.here ? "black" : "white",
           cursor: 'pointer',
           color: "black",
@@ -333,11 +346,11 @@ const Map = ({ playerData }) => {
           margin: "0 -1px",
           position: "relative",
           border: room.safe ? "2px solid rgb(46, 193, 46)" : "0",
-          border: "2px solid red",
-          borderTop: room.n_to > 0 ? "none" : "2px solid red",
-          borderRight: room.e_to > 0 ? "none" : "2px solid red",
-          borderBottom: room.s_to > 0 ? "none" : "2px solid red",
-          borderLeft: room.w_to > 0 ? "none" : "2px solid red",
+          border: "2px solid #2d2d2d",
+          borderTop: room.n_to > 0 ? "none" : "2px solid #2d2d2d",
+          borderRight: room.e_to > 0 ? "none" : "2px solid #2d2d2d",
+          borderBottom: room.s_to > 0 ? "none" : "2px solid #2d2d2d",
+          borderLeft: room.w_to > 0 ? "none" : "2px solid #2d2d2d",
         }} key={room.id}>
           {room.id}
         </span>)
