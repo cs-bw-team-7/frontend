@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default() => {
-    const auth = 'Token ac6e9fac44b48a6974eb8add0a3715184057be52'
+    const auth = 'Token REPLACEME'
 
     return axios.create({
         headers: {
