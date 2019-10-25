@@ -324,7 +324,7 @@ const Map = ({ playerData }) => {
         ]
         let background = `rgb(${(245 - (room.elevation * 35))},${(245 - (room.elevation * 35))},${(245 - (room.elevation * 35))})`;
         if (room.here) {
-            background = 'green'
+            background = '#2bbb2b'
         } else if (room.terrain === "CAVE") {
             background = "#37358e"
         } else if (descriptions.indexOf(room.title) < 0) {
