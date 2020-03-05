@@ -141,7 +141,7 @@ const Map = ({ playerData }) => {
     }
 
     for (let i = 0; i < rooms.length; i++) {
-      const room = rooms[i];
+      const room = rooms[i]; // 1111
       room.n_to = (room.exits >> 3) & 1
       room.e_to = (room.exits >> 2) & 1
       room.s_to = (room.exits >> 1) & 1
@@ -207,6 +207,10 @@ const Map = ({ playerData }) => {
             const traverse = direction => {
                 return axios().post('https://t7-api.herokuapp.com/move', { direction: direction })
             }
+
+            const take = item => {
+                return axios().post('https://t7-api.herokuapp.com/take', { name: item })
+            }
             // let moves = path.map(direction => {
             //     return axios().post('https://t7-api.herokuapp.com/move', { direction: direction }).then(() => console.log('hi?'));
             // });
@@ -245,8 +249,21 @@ const Map = ({ playerData }) => {
                         data = response.data.data;
                         current = data.coordinates;
                         console.log('CURRENT 1 :', current);
+                        // if (response.data.data.items.indexOf("golden egg") > 0) {
+                        //     let response = await take("golden egg")
+                        //     await wait(response.data.data.cooldown)
+                        // }
+                        // if (response.data.data.items.indexOf("colorful egg") > 0) {
+                        //     let response = await take("colorful egg")
+                        //     await wait(response.data.data.cooldown)
+                        // }
+                        // if (response.data.data.items.indexOf("regular egg") > 0) {
+                        //     let response = await take("regular egg")
+                        //     await wait(response.data.data.cooldown)
+                        // }
                     }
                     // console.log('out data', data);
+                    // console.log('golden', response.data.data)
 
                     setRooms((oldRooms) => {
                         let rooms = oldRooms.map(room => ({
@@ -295,6 +312,7 @@ const Map = ({ playerData }) => {
             console.log(error);
         }
     }
+    let primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499]
     
     let rows = [];
     room_matrix.forEach((row) => {
@@ -323,12 +341,17 @@ const Map = ({ playerData }) => {
             'Mt. Holloway'
         ]
         let background = `rgb(${(245 - (room.elevation * 35))},${(245 - (room.elevation * 35))},${(245 - (room.elevation * 35))})`;
+       
         if (room.here) {
-            background = '#2bbb2b'
-        } else if (room.terrain === "CAVE") {
-            background = "#37358e"
+          background = '#2bbb2b'
         } else if (descriptions.indexOf(room.title) < 0) {
-            background = "#dbef72"
+          background = "#dbef72"
+        } else if (room.terrain === "CAVE") {
+          background = "#6865e2"
+        } else if (room.terrain === "TRAP") {
+          background = "#f73030"
+        } else if (primes.indexOf(room.id) >= 0) {
+          background = 'pink'
         }
         return (<span onClick={handleOnClick} data-coords={`(${room.coordinates.x},${room.coordinates.y})`} style={{
           // border: "1px solid red",
